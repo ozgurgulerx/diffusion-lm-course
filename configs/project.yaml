@@ -1,0 +1,111 @@
+# project.yaml — Diffusion LM Course Configuration
+# This file drives tooling and automation. It is the single source of truth
+# for project metadata, module/lesson ordering, and build settings.
+
+project:
+  name: diffusion-lm-course
+  version: 0.1.0
+  phase: 0  # 0 = spec only, 1 = first modules, 2+ = later modules
+  description: >
+    Code-first course teaching diffusion language models
+    from first principles to deployment.
+  author: Ozgur Guler
+  license: MIT
+  python: ">=3.11"
+
+learner:
+  persona: "AI/ML engineer with transformer and PyTorch experience"
+  math_level: "code-first with intuition; formal math only when it explains the code"
+  assumed_knowledge:
+    - PyTorch (tensors, autograd, nn.Module, training loops)
+    - Transformer architecture (self-attention, positional encoding)
+    - Autoregressive language model basics
+
+compute:
+  early_modules:  # Modules 0-2
+    gpu_vram_gb: 16
+    colab_compatible: true
+  later_modules:  # Modules 3-5
+    gpu_vram_gb: 40  # flag when exceeded
+    colab_compatible: false  # may require paid tier or cloud
+
+framework:
+  primary: pytorch
+  secondary: huggingface  # introduced in Module 5, optional earlier
+  linter: ruff
+  test_runner: pytest
+
+curriculum:
+  modules:
+    - id: module0
+      title: "Foundations"
+      lessons: []   # populated in Phase 1
+      labs: []
+
+    - id: module1
+      title: "Discrete Diffusion"
+      papers:
+        - key: d3pm
+          title: "Structured Denoising Diffusion Models in Discrete State-Spaces"
+          authors: "Austin et al."
+          year: 2021
+        - key: mdlm
+          title: "Simple and Effective Masked Diffusion Language Models"
+          authors: "Sahoo et al."
+          year: 2024
+      lessons: []
+      labs: []
+
+    - id: module2
+      title: "Continuous Diffusion in Embedding Space"
+      papers:
+        - key: diffusion-lm
+          title: "Diffusion-LM Improves Controllable Text Generation"
+          authors: "Li et al."
+          year: 2022
+        - key: cdcd
+          title: "Continuous Diffusion for Categorical Data"
+          authors: "Dieleman et al."
+          year: 2022
+      lessons: []
+      labs: []
+
+    - id: module3
+      title: "Masked Diffusion"
+      papers:
+        - key: mdm
+          title: "Simplified and Generalized Masked Diffusion for Discrete Data"
+          authors: "Shi et al."
+          year: 2024
+        - key: sedd
+          title: "Discrete Diffusion Modeling by Estimating the Ratios of the Data Distribution"
+          authors: "Lou et al."
+          year: 2024
+      lessons: []
+      labs: []
+
+    - id: module4
+      title: "Score-Based and Flow-Matching for Text"
+      papers: []  # to be populated during Phase 1 research
+      lessons: []
+      labs: []
+
+    - id: module5
+      title: "Deployment and Real Tasks"
+      papers: []
+      lessons: []
+      labs: []
+
+paths:
+  spec: SPEC.md
+  charter: docs/project-charter.md
+  config: configs/project.yaml
+  lessons: lessons/
+  shared: shared/
+  requirements: requirements.txt
+
+notebook_policy:
+  clear_outputs_on_commit: true
+  self_contained: true  # each notebook installs its own deps
+  assert_checkpoints: true  # inline asserts for learner verification
+  seed_required: true
